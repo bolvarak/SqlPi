@@ -1,6 +1,4 @@
-SqlPi
-====
----
+# SqlPi
 SqlPi (Structured Query Language Programming Interface) is a TCP socket that sits on a MySQL, MariaDB, PostgreSQL or SQLite server and provides a JSON API to execute queries using JWT (JSON Web Token) Authentication.
 
 ## Requirements
