@@ -28,17 +28,17 @@ $ sudo mv sqlpi /usr/bin
 
 ## Usage
 
-| Command            | Type                      | Default | Description                                                                               |
-| ------------------ | ------------------------- | ------- | ----------------------------------------------------------------------------------------- |
-| --backend-type     | String                    | None    | This defines the database type that the backend will use (sqlite, mysql, pgsql)           |
-| --backend-host     | Hostname<br>IPv4<br>IPv6  | None    | This defines the host in which the backend database resides (Ignored with sqlite)         |
-| --backend-port     | Number                    | None    | This defines the port in which the backend database is listening on (Ignored with sqlite) |
-| --backend-db       | String                    | None    | This defines the database name for the backend, for sqlite, this should be a file path    |
-| --backend-username | String                    | None    | This defines the username for accessing the backend database                              |
-| --backend-password | String                    | None    | This defines the password for accessing the backend database                              |
-| --log-file         | String                    | stdout  | This defines the filepath for outputting log data to                                      |
-| --bind-address     | localhost<br>IPv4<br>IPv6 | Any     | This defines the hostname/IP that the service should bind to                              |
-| --bind-port        | Number                    | 1597    | This defines the port that the service should bind to                                     |
+| Command                  | Type                      | Default | Description                                                                               |
+| ------------------------ | ------------------------- | ------- | ----------------------------------------------------------------------------------------- |
+| -t<br>--backend-type     | String                    | None    | This defines the database type that the backend will use (sqlite, mysql, pgsql)           |
+| -h<br>--backend-host     | Hostname<br>IPv4<br>IPv6  | None    | This defines the host in which the backend database resides (Ignored with sqlite)         |
+| -p<br>--backend-port     | Number                    | None    | This defines the port in which the backend database is listening on (Ignored with sqlite) |
+| -d<br>--backend-db       | String                    | None    | This defines the database name for the backend, for sqlite, this should be a file path    |
+| -u<br>--backend-username | String                    | None    | This defines the username for accessing the backend database                              |
+| -w<br>--backend-password | String                    | None    | This defines the password for accessing the backend database                              |
+| -l<br>--log-file         | String                    | stdout  | This defines the filepath for outputting log data to                                      |
+| -H<br>--bind-address     | localhost<br>IPv4<br>IPv6 | Any     | This defines the hostname/IP that the service should bind to                              |
+| -P<br>--bind-port        | Number                    | 1597    | This defines the port that the service should bind to                                     |
 
 ## Systemd Unit
 ```
