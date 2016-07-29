@@ -8,23 +8,28 @@ SqlPi (Structured Query Language Programming Interface) is a TCP socket that sit
  - QCA (Qt Cryptographic Architecture) 2.0+
 
 ## Ubuntu Installation
-    sudo apt update && sudo apt install qt5-default libqt5sql5 libqt5sql5-mysql libqt5sql5-odbc libqt5sql5-psql libqt5sql5-sqlite libqt5sql5-tds geoip-database-contrib libgeoip-dev libqca-qt5-2 libqca-qt5-2-dev libqca-qt5-2-plugins
+```
+sudo apt update && sudo apt install qt5-default libqt5sql5 libqt5sql5-mysql libqt5sql5-odbc libqt5sql5-psql libqt5sql5-sqlite libqt5sql5-tds geoip-database-contrib libgeoip-dev libqca-qt5-2 libqca-qt5-2-dev libqca-qt5-2-plugins
+```
 
 ## ArchLinux Installation
 
-    sudo pacman -Syy qt5 geoip geoip-database postgresql-libs mariadb-clients qca-qt5
+```
+sudo pacman -Syy qt5 geoip geoip-database postgresql-libs mariadb-clients qca-qt5
+```
 
 ## Compilation
-        $ cd /tmp
-	$ git clone https://bolvarak@bitbucket.org/bolvarak/SqlPi.git
-	$ cd SqlPi
-	$ qmake sqlpi.pro
-	$ make
-	$ sudo mv sqlpi /usr/bin
+```
+$ cd /tmp
+$ git clone https://bolvarak@bitbucket.org/bolvarak/SqlPi.git
+$ cd SqlPi
+$ qmake sqlpi.pro
+$ make
+$ sudo mv sqlpi /usr/bin
+```
 
 ## Usage
 
-| ------------------ | ------------------------ | ------- | ----------------------------------------------------------------------------------------- |
 | Command            | Type                     | Default | Description                                                                               |
 | ------------------ | ------------------------ | ------- | ----------------------------------------------------------------------------------------- |
 | --backend-type     | String                   | None    | This defines the database type that the backend will use (sqlite, mysql, pgsql)           |
@@ -37,38 +42,40 @@ SqlPi (Structured Query Language Programming Interface) is a TCP socket that sit
 | ------------------ | ------------------------ | ------- | ----------------------------------------------------------------------------------------- |
 
 ## Systemd Unit
-        [Unit]
-	Description=SqlPi Database Abstraction Layer
-	After=network.target
+```
+[Unit]
+Description=SqlPi Database Abstraction Layer
+After=network.target
 
-        [Service]
-	Type=forking
-	PIDFile=/run/sqlpi.pid
+[Service]
+Type=forking
+PIDFile=/run/sqlpi.pid
 
-        ## Available types:  mysql, pgsql, sqlite
-	Environment=SQLPI_BACKEND_TYPE=sqlite
+## Available types:  mysql, pgsql, sqlite
+Environment=SQLPI_BACKEND_TYPE=sqlite
 
-        ## Only needed for mysql and pgsql
-	# Environment=SQLPI_BACKEND_HOST=localhost
-	# Environment=SQLPI_BACKEND_PORT=3306|5432
+## Only needed for mysql and pgsql
+# Environment=SQLPI_BACKEND_HOST=localhost
+# Environment=SQLPI_BACKEND_PORT=3306|5432
 
-        ## For mysql and pgsql, this would be the database name
-	Environment=SQLPI_BACKEND_DB=/path/to/db.sqlite
+## For mysql and pgsql, this would be the database name
+Environment=SQLPI_BACKEND_DB=/path/to/db.sqlite
 
-        ## Username for accessing the database/server
-	# Environment=SQLPI_BACKEND_USER=someUser
+## Username for accessing the database/server
+# Environment=SQLPI_BACKEND_USER=someUser
 
-        ## Password for accessing the database/server
-	# Environment=SQLPI_BACKENT_PASS=superSecretPassword
+## Password for accessing the database/server
+# Environment=SQLPI_BACKENT_PASS=superSecretPassword
 
-        ## Start the service
-	ExecStart=/usr/bin/sqlpi \
-	        --backend-type=${SQLPI_BACKEND_TYPE} \
-		# --backend-host=${SQLPI_BACKEND_HOST} \
-		# --backend-port=${SQLPI_BACKEND_PORT} \
-		--backend-db=${SQLPI_BACKEND_DB} \
-		# --backend-username=${SQLPI_BACKEND_USER} \
-		# --backend-password=${SQLPI_BACKEND_PASS}
+## Start the service
+ExecStart=/usr/bin/sqlpi \
+    --backend-type=${SQLPI_BACKEND_TYPE} \
+	# --backend-host=${SQLPI_BACKEND_HOST} \
+	# --backend-port=${SQLPI_BACKEND_PORT} \
+	--backend-db=${SQLPI_BACKEND_DB} \
+	# --backend-username=${SQLPI_BACKEND_USER} \
+	# --backend-password=${SQLPI_BACKEND_PASS}
 
-        [Install]
-	WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
+```
