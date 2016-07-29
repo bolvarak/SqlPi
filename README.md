@@ -48,8 +48,10 @@ Description=SqlPi Database Abstraction Layer
 After=network.target
 
 [Service]
-Type=forking
-PIDFile=/run/sqlpi.pid
+
+## These can and should be changed
+User=root
+Group=root
 
 ## Available types:  mysql, pgsql, sqlite
 Environment=SQLPI_BACKEND_TYPE=sqlite
