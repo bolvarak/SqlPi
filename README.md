@@ -39,7 +39,6 @@ $ sudo mv sqlpi /usr/bin
 | --backend-username | String                   | None    | This defines the username for accessing the backend database                              |
 | --backend-password | String                   | None    | This defines the password for accessing the backend database                              |
 | --log-file         | String                   | stdout  | This defines the filepath for outputting log data to                                      |
-| ------------------ | ------------------------ | ------- | ----------------------------------------------------------------------------------------- |
 
 ## Systemd Unit
 ```
