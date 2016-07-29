@@ -18,6 +18,8 @@
  */
 int main(int intArguments, char* chrArguments[])
 {
+	// Initialize the resources file
+	Q_INIT_RESOURCE(dependencies);
 	// Create our new application
 	QCoreApplication appDbApi(intArguments, chrArguments);
 	// Instantiate the server

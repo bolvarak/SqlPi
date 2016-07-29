@@ -16,6 +16,12 @@ sudo apt update && sudo apt install qt5-default libqt5sql5 libqt5sql5-mysql libq
 sudo pacman -Syy qt5 geoip geoip-database postgresql-libs mariadb-clients qca-qt5
 ```
 
+## MacOS Installation
+MacOS installation requires <a href="http://brew.sh/" target="_blank">Homebrew</a>.
+```
+brew install qt5 qca
+```
+
 ## Compilation
 ```
 $ cd /tmp
@@ -36,6 +42,7 @@ $ sudo mv sqlpi /usr/bin
 | -d<br>--backend-db       | String                    | None    | This defines the database name for the backend, for sqlite, this should be a file path    |
 | -u<br>--backend-username | String                    | None    | This defines the username for accessing the backend database                              |
 | -w<br>--backend-password | String                    | None    | This defines the password for accessing the backend database                              |
+| -f<br>--backend-prefix   | String                    | None    | This defines the table prefix for SqlPi's tables in the backend                           |
 | -l<br>--log-file         | String                    | stdout  | This defines the filepath for outputting log data to                                      |
 | -H<br>--bind-address     | localhost<br>IPv4<br>IPv6 | Any     | This defines the hostname/IP that the service should bind to                              |
 | -P<br>--bind-port        | Number                    | 1597    | This defines the port that the service should bind to                                     |
