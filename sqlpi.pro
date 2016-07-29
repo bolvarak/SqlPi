@@ -3,7 +3,7 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = qtDB-API
+TARGET = sqlpi
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -36,4 +36,5 @@ RESOURCES += \
 DISTFILES += \
 	Connection.sql \
 	Authorization.sql \
-	Session.sql
+	Session.sql \
+    README.md
