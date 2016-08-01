@@ -47,6 +47,7 @@ $ sudo mv sqlpi /usr/bin
 | -H<br>--bind-address     | localhost<br>IPv4<br>IPv6 | Any     | This defines the hostname/IP that the service should bind to                              |
 | -P<br>--bind-port        | Number                    | 1597    | This defines the port that the service should bind to                                     |
 | -h<br>--help             | None                      | None    | This will display this usage menu in the CLI                                              |
+| -s<br>--socket-type      | tcp<br>web<br>cgi         | tcp     | This defines which type of socket to use (TCP, WebSocket or CGI)                          |
 
 ## Systemd Unit
 ```
