@@ -163,7 +163,7 @@ namespace SqlPi
 		void Configuration::setBackendUsername(QString strUsername)
 		{
 			// Set the backend database username into the instance
-			mBackendUsername = strUsername
+			mBackendUsername = strUsername;
 		}
 
 		void Configuration::setBindAddress(QHostAddress qhaAddress)

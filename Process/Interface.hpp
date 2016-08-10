@@ -11,7 +11,8 @@
 
 #include <QCommandLineOption>
 #include <QCommandLineParser>
-#include <QObject>
+#include <QString>
+#include <QStringList>
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// SqlPi Namespace ////////////////////////////////////////////////////////////////////
@@ -31,10 +32,92 @@ namespace SqlPi
 
 		class Interface : public QCommandLineParser
 		{
+			/////////////////////////////////////////////////////////////////////////////
+			/// Private Methods & Properties ///////////////////////////////////////////
+			///////////////////////////////////////////////////////////////////////////
+
+			private:
+
+				/////////////////////////////////////////////////////////////////////////
+				/// Methods ////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////
+
 				/**
-				 * Qt Recognition
+				 * @paragraph This method builds the backend database name/path CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendDatabase()
+				 * @return QCommandLineOption
 				 */
-				Q_OBJECT
+				QCommandLineOption optionBackendDatabase();
+
+				/**
+				 * @paragraph This method builds the backend database host CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendHost()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendHost();
+
+				/**
+				 * @paragraph This method builds the backend database password CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendPassword()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendPassword();
+
+				/**
+				 * @paragraph This method builds the backend database port CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendPort()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendPort();
+
+				/**
+				 * @paragraph This method builds the backend database table prefix CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendPrefix()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendPrefix();
+
+				/**
+				 * @paragraph This method builds the backend database engine CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendType()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendType();
+
+				/**
+				 * @paragraph This method builds the backend database username CLI option
+				 * @brief SqlPi::Process::Interface::optionBackendUsername()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBackendUsername();
+
+				/**
+				 * @paragraph This method builds the SqlPi listening address CLI option
+				 * @brief SqlPi::Process::Interface::optionBindAddress()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBindAddress();
+
+				/**
+				 * @paragraph This method builds the SqlPi listening port CLI option
+				 * @brief SqlPi::Process::Interface::optionBindPort()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionBindPort();
+
+				/**
+				 * @paragraph This method builds the log file path CLI option
+				 * @brief SqlPi::Process::Interface::optionLogFile()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionLogFile();
+
+				/**
+				 * @paragraph This method builds the SqlPi Socket Type CLI option
+				 * @brief SqlPi::Process::Interface::optionSocketType()
+				 * @return QCommandLineOption
+				 */
+				QCommandLineOption optionSocketType();
 
 			/////////////////////////////////////////////////////////////////////////////
 			/// Public Methods & Properties ////////////////////////////////////////////

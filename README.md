@@ -34,20 +34,20 @@ $ sudo mv sqlpi /usr/bin
 
 ## Usage
 
-| Command                  | Type                       | Default   | Description                                                                               |
-| ------------------------ | -------------------------- | --------- | ----------------------------------------------------------------------------------------- |
-| -t<br>--backend-type     | String                     | Null      | This defines the database type that the backend will use (sqlite, mysql, pgsql)           |
-| -h<br>--backend-host     | localhost<br>IPv4<br>IPv6  | localhost | This defines the host in which the backend database resides (Ignored with sqlite)         |
-| -p<br>--backend-port     | Number                     | 0         | This defines the port in which the backend database is listening on (Ignored with sqlite) |
-| -d<br>--backend-db       | String                     | Null      | This defines the database name for the backend, for sqlite, this should be a file path    |
-| -u<br>--backend-username | String                     | Null      | This defines the username for accessing the backend database                              |
-| -w<br>--backend-password | String                     | Null      | This defines the password for accessing the backend database                              |
-| -f<br>--backend-prefix   | String                     | Null      | This defines the table prefix for SqlPi's tables in the backend                           |
-| -l<br>--log-file         | String                     | stdout    | This defines the filepath for outputting log data to                                      |
-| -H<br>--bind-address     | localhost<br>IPv4<br>IPv6  | Any       | This defines the hostname/IP that the service should bind to                              |
-| -P<br>--bind-port        | Number                     | 1597      | This defines the port that the service should bind to                                     |
-| -s<br>--socket-type      | tcp<br>web<br>cgi          | tcp       | This defines which type of socket to use (TCP, WebSocket or CGI)                          |
-| -h<br>--help             |                            |           | This will display this usage menu in the CLI                                              |
+| Command            | Type                       | Default   | Description                                                                               |
+| ------------------ | -------------------------- | --------- | ----------------------------------------------------------------------------------------- |
+| --backend-type     | String                     | Null      | This defines the database type that the backend will use (sqlite, mysql, pgsql)           |
+| --backend-host     | localhost<br>IPv4<br>IPv6  | localhost | This defines the host in which the backend database resides (Ignored with sqlite)         |
+| --backend-port     | Number                     | 0         | This defines the port in which the backend database is listening on (Ignored with sqlite) |
+| --backend-db       | String                     | Null      | This defines the database name for the backend, for sqlite, this should be a file path    |
+| --backend-username | String                     | Null      | This defines the username for accessing the backend database                              |
+| --backend-password | String                     | Null      | This defines the password for accessing the backend database                              |
+| --backend-prefix   | String                     | Null      | This defines the table prefix for SqlPi's tables in the backend                           |
+| --log-file         | String                     | stdout    | This defines the filepath for outputting log data to                                      |
+| --bind-address     | localhost<br>IPv4<br>IPv6  | Any       | This defines the hostname/IP that the service should bind to                              |
+| --bind-port        | Number                     | 1597      | This defines the port that the service should bind to                                     |
+| --socket-type      | tcp<br>web<br>cgi          | tcp       | This defines which type of socket to use (TCP, WebSocket or CGI)                          |
+| --help             |                            |           | This will display this usage menu in the CLI                                              |
 
 ## Systemd Unit
 ```

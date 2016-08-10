@@ -2,8 +2,7 @@
 /// Headers //////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-#include <QCoreApplication>
-#include "Transport/Server.hpp"
+#include "Bootstrap.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Main Event Loop //////////////////////////////////////////////////////////
@@ -18,16 +17,16 @@
  */
 int main(int intArguments, char* chrArguments[])
 {
-	// Initialize the resources file
-	Q_INIT_RESOURCE(dependencies);
-	// Create our new application
-	QCoreApplication appDbApi(intArguments, chrArguments);
-	// Instantiate the server
-	SqlPi::Transport::Server* srvDbApi = new SqlPi::Transport::Server();
-	// Start the server
-	srvDbApi->start();
-	// Return our application execution
-	return appDbApi.exec();
+	// Instantiate the service
+	SqlPi::Bootstrap* svcSqlPi = new SqlPi::Bootstrap(intArguments, chrArguments);
+	// Prepare the service
+	if (svcSqlPi->go()) {
+		// We're done, return the main event loop
+		return svcSqlPi->getApplication().exec();
+	} else {
+		// We're done, something went wrong
+		return false;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 } /// End Main Event Loop ////////////////////////////////////////////////////
