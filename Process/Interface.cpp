@@ -175,7 +175,7 @@ namespace SqlPi
 			// Create the command line option
 			QCommandLineOption cloCommand("socket-type");
 			// Set the value name of the option
-			cloCommand.setValueName("tcp|web|cgi");
+			cloCommand.setValueName("tcp|web|fcgi");
 			// Set the default value
 			cloCommand.setDefaultValue("tcp");
 			// We're done, return the new option
