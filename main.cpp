@@ -25,7 +25,7 @@ int main(int intArguments, char* chrArguments[])
 		return svcSqlPi->getApplication().exec();
 	} else {
 		// We're done, something went wrong
-		return false;
+		return 1;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
