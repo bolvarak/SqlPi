@@ -19,7 +19,9 @@ SOURCES += \
 	Api/Abstract/SQLite.cpp \
 	Api/Abstract/Model.cpp \
 	Api/Model/Authorization.cpp \
-    Bootstrap.cpp
+    Bootstrap.cpp \
+    Process/Configuration.cpp \
+    Process/Interface.cpp
 
 HEADERS += \
 	Externals/QJsonWebToken/src/qjsonwebtoken.h \
@@ -30,7 +32,9 @@ HEADERS += \
 	Api/Abstract/SQLite.hpp \
 	Api/Abstract/Model.hpp \
 	Api/Model/Authorization.hpp \
-    Bootstrap.hpp
+    Bootstrap.hpp \
+    Process/Configuration.hpp \
+    Process/Interface.hpp
 
 RESOURCES += \
 	dependencies.qrc
