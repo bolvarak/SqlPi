@@ -21,7 +21,7 @@
 #include <iostream>
 #include "Process/Configuration.hpp"
 #include "Process/Interface.hpp"
-#include "Transport/Server.hpp"
+#include "Transport/Tcp.hpp"
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// SqlPi Namespace ////////////////////////////////////////////////////////////////////
@@ -122,6 +122,13 @@ namespace SqlPi
 			 */
 			Process::Interface* mInput;
 
+			/**
+			 * @paragraph This property contains the socket listener for the service
+			 * @brief SqlPi::mListener
+			 * @var SqlPi::Transport::Abstract::Server*
+			 */
+			Transport::Abstract::Server* mListener;
+
 			/////////////////////////////////////////////////////////////////////////////
 			/// Methods ////////////////////////////////////////////////////////////////
 			///////////////////////////////////////////////////////////////////////////
@@ -189,6 +196,13 @@ namespace SqlPi
 			 * @return SqlPi::Process::Interface*
 			 */
 			Process::Interface* getInput();
+
+			/**
+			 * @paragraph This method returns the current listener from the instance
+			 * @brief SqlPi::Bootstrap::getListener()
+			 * @return SqlPi::Transport::Abstract::Server*
+			 */
+			Transport::Abstract::Server* getListener();
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	}; /// End SqlPi::Bootstrap Class Definition ///////////////////////////////////////

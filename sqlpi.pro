@@ -1,5 +1,6 @@
-QT += core network sql
+QT += core network websockets sql
 QT -= gui
+QTPLUGIN += QSQLMYSQL
 
 CONFIG += c++11
 
@@ -12,7 +13,6 @@ TEMPLATE = app
 SOURCES += \
 	main.cpp \
 	Externals/QJsonWebToken/src/qjsonwebtoken.cpp \
-	Transport/Server.cpp \
 	Connection/Client.cpp \
 	Process/Task.cpp \
 	Api/Backend.cpp \
@@ -21,11 +21,12 @@ SOURCES += \
 	Api/Model/Authorization.cpp \
     Bootstrap.cpp \
     Process/Configuration.cpp \
-    Process/Interface.cpp
+    Process/Interface.cpp \
+    Transport/Abstract/Server.cpp \
+    Transport/Tcp.cpp
 
 HEADERS += \
 	Externals/QJsonWebToken/src/qjsonwebtoken.h \
-	Transport/Server.hpp \
 	Connection/Client.hpp \
 	Process/Task.hpp \
 	Api/Backend.hpp \
@@ -34,10 +35,9 @@ HEADERS += \
 	Api/Model/Authorization.hpp \
     Bootstrap.hpp \
     Process/Configuration.hpp \
-    Process/Interface.hpp
-
-RESOURCES += \
-	dependencies.qrc
+    Process/Interface.hpp \
+    Transport/Abstract/Server.hpp \
+    Transport/Tcp.hpp
 
 DISTFILES += \
 	Connection.sql \

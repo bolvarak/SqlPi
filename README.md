@@ -46,7 +46,7 @@ $ sudo mv sqlpi /usr/bin
 | --log-file         | String                     | stdout    | This defines the filepath for outputting log data to                                      |
 | --bind-address     | localhost<br>IPv4<br>IPv6  | Any       | This defines the hostname/IP that the service should bind to                              |
 | --bind-port        | Number                     | 1597      | This defines the port that the service should bind to                                     |
-| --socket-type      | tcp<br>web<br>fcgi         | tcp       | This defines which type of socket to use (TCP, WebSocket or CGI)                          |
+| --socket-type      | tcp                        | tcp       | This defines which type of socket to use (TCP)                                            |
 | --help             |                            |           | This will display this usage menu in the CLI                                              |
 
 ## Systemd Unit
@@ -89,3 +89,8 @@ ExecStart=/usr/bin/sqlpi \
 [Install]
 WantedBy=multi-user.target
 ```
+
+## Planned Features
+ - WebSocket Listener
+ - FastCGI Listener
+ - FastCGI Listener UNIX Socket Implementation

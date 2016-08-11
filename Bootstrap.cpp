@@ -188,18 +188,26 @@ namespace SqlPi
 
 	bool Bootstrap::setupSocketFastCGI(QString &strError)
 	{
+		// Reset the error
+		strError = QString::null;
 		// We're done, the socket is good to go
 		return true;
 	}
 
 	bool Bootstrap::setupSocketTCP(QString &strError)
 	{
+		// Reset the error
+		strError = QString::null;
+		// Set the listener into the instance
+		this->mListener = new Transport::Tcp(this);
 		// We're done, the socket is good to go
 		return true;
 	}
 
 	bool Bootstrap::setupSocketWeb(QString &strError)
 	{
+		// Reset the error
+		strError = QString::null;
 		// We're done, the socket is good to go
 		return true;
 	}
@@ -284,8 +292,62 @@ namespace SqlPi
 
 	bool Bootstrap::setupService(QString &strError)
 	{
-		// We're done, the service is good to go
-		return true;
+		// Define our socket type list
+		QStringList qslSocketTypes = QStringList() << "tcp" << "web" << "fcgi";
+		// Make sure we have a socket type
+		if (!this->mInput->isSet("socket-type")) {
+			// Set the error
+			strError = "[Service]:  No socket type defined.  Valid types are tcp, web and fcgi.";
+			// We're done, no socket type defined
+			return false;
+		}
+		// Make sure the socket type is valid
+		if (!qslSocketTypes.contains(this->mInput->value("socket-type").trimmed(), Qt::CaseInsensitive)) {
+			// Set the error
+			strError = QString("[Service]:  Socket type [%1] is not valid.  Valid types are tcp, web and fcgi.").arg(this->mInput->value("socket-type").trimmed());
+			// We're done, invalid socket type
+			return false;
+		} else {
+			// Set the socket type into the configuration
+			Process::Configuration::setSocketType(this->mInput->value("socket-type").trimmed());
+		}
+		// Make sure we have a bind address
+		if (!this->mInput->isSet("bind-address")) {
+			// Set the error
+			strError = "[Service]:  No bind address was defined.";
+			// We're done, no bind address set
+			return false;
+		}
+		// Make sure we have a bind port
+		if (!this->mInput->isSet("bind-port")) {
+			// Set the error
+			strError = "[Service]:  No bind port was defined.";
+			// We're done, no bind port set
+			return false;
+		}
+		// Set the bind address into the configuration
+		Process::Configuration::setBindAddress(this->mInput->value("bind-address").trimmed());
+		// Set the bind port into the configuration
+		Process::Configuration::setBindPort(this->mInput->value("bind-port").trimmed().toInt());
+		// Check for a TCP socket
+		if (Process::Configuration::getSocketType().toLower() == "tcp") {
+			// We're done, setup the TCP socket
+			return this->setupSocketTCP(strError);
+		}
+		// Check for a Web Socket
+		if (Process::Configuration::getSocketType().toLower() == "web") {
+			// We're done, setup the Web Socket
+			return this->setupSocketWeb(strError);
+		}
+		// Check for a FastCGI socket
+		if (Process::Configuration::getSocketType().toLower() == "fcgi") {
+			// We're done, setup the FastCGI socket
+			return this->setupSocketFastCGI(strError);
+		}
+		// Set the error
+		strError = "[Service]:  No provider available.";
+		// We're done, no provider available
+		return false;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -312,6 +374,11 @@ namespace SqlPi
 		if (!this->setupService(strError)) {
 			// Output the error
 			std::cerr << "[SqlPi][Bootstrap]" << strError.toStdString() << std::endl;
+			// We're done, something went wrong
+			return false;
+		} else {
+			// Send the message
+			std::cerr << "[SqlPi][Bootstrap][Service]:  Initialized" << std::endl;
 		}
 		// We're done, the service is good to go
 		return true;
@@ -331,6 +398,12 @@ namespace SqlPi
 	{
 		// Return the CLI from the instance
 		return this->mInput;
+	}
+
+	Transport::Abstract::Server* Bootstrap::getListerner()
+	{
+		// Return the listener from the instance
+		return this->mListener;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
