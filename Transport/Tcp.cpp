@@ -20,23 +20,29 @@ namespace SqlPi
 		/// Constructor ////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////
 
-		Tcp::Tcp(QObject* qoParent) : Server(), QTcpServer(qoParent)
+		Tcp::Tcp()
 		{
+			// Instantiate the socket
+			this->mConnection = new QTcpServer();
 			// Make the new client connection
-			this->connect(this, SIGNAL(newConnection()), this, SLOT(client()));
+			this->connect(this->mConnection, SIGNAL(newConnection()), this, SLOT(client()));
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////
 		/// Public Abstract Implementations ////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////
 
-		void Tcp::await()
+		bool Tcp::await(QString &strError)
 		{
 			// Try to start the server
-			if (!this->listen(Process::Configuration::getBindAddress(), Process::Configuration::getBindPort())) {
-				// We're done send the error
-				emit this->error(this->errorString(), 500);
+			if (!this->mConnection->listen(Process::Configuration::getBindAddress(), Process::Configuration::getBindPort())) {
+				// Set the error
+				strError = this->mConnection->errorString();
+				// We're done, there was a problem starting the socket
+				return false;
 			}
+			// We're done, all is well
+			return true;
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +54,7 @@ namespace SqlPi
 			// Instantiate the new client
 			Connection::Client* conClient = new Connection::Client(this);
 			// Set the socket descriptor
-			conClient->setSocket(this->nextPendingConnection());
+			conClient->setSocket(this->mConnection->nextPendingConnection());
 		}
 
 		void Tcp::shutdown()

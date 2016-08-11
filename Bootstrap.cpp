@@ -42,35 +42,35 @@ namespace SqlPi
 		// Database Name
 		if (!this->mInput->isSet("backend-db")) {
 			// Set the error message
-			strError = "[Backend][MySQL]:  No backend database name was defined.";
+			strError = "Backend MySQL name not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Host Name
 		if (!this->mInput->isSet("backend-host")) {
 			// Set the error message
-			strError = "[Backend][MySQL]:  No backend host was defined.";
+			strError = "Backend MySQL host not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Host Port
 		if (!this->mInput->isSet("backend-port")) {
 			// Set the error message
-			strError = "[Backend][MySQL]:  No backend port was defined.";
+			strError = "Backend MySQL port not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Username
 		if (!this->mInput->isSet("backend-username")) {
 			// Set the error message
-			strError = "[Backend][MySQL]:  No backend username was defined.";
+			strError = "Backend MySQL username not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Password
 		if (!this->mInput->isSet("backend-password")) {
 			// Set the error message
-			strError = "[Backend][MySQL]:  No backend password was defined.";
+			strError = "Backend MySQL password not defined.";
 			// We're done, there was a problem
 			return false;
 		}
@@ -97,35 +97,35 @@ namespace SqlPi
 		// Database Name
 		if (!this->mInput->isSet("backend-db")) {
 			// Set the error message
-			strError = "[Backend][PgSQL]:  No backend database name was defined.";
+			strError = "Backend PgSQL name not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Host Name
 		if (!this->mInput->isSet("backend-host")) {
 			// Set the error message
-			strError = "[Backend][PgSQL]:  No backend host was defined.";
+			strError = "Backend PgSQL host not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Host Port
 		if (!this->mInput->isSet("backend-port")) {
 			// Set the error message
-			strError = "[Backend][PgSQL]:  No backend port was defined.";
+			strError = "Backend PgSQL port not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Username
 		if (!this->mInput->isSet("backend-username")) {
 			// Set the error message
-			strError = "[Backend][PgSQL]:  No backend username was defined.";
+			strError = "Backend PgSQL username not defined.";
 			// We're done, there was a problem
 			return false;
 		}
 		// Database Password
 		if (!this->mInput->isSet("backend-password")) {
 			// Set the error message
-			strError = "[Backend][PgSQL]:  No backend password was defined.";
+			strError = "Backend PgSQL password not defined.";
 			// We're done, there was a problem
 			return false;
 		}
@@ -152,7 +152,7 @@ namespace SqlPi
 		// Database Name
 		if (!this->mInput->isSet("backend-db")) {
 			// Set the error message
-			strError = "[Backend][SQLite]:  No backend database path was defined.";
+			strError = "Backend SQLite database path not defined.";
 			// We're done, there was a problem
 			return false;
 		}
@@ -161,14 +161,14 @@ namespace SqlPi
 		// Check for existence
 		if (!fleDb.exists()) {
 			// Set the error message
-			strError = QString("[Backend][SQLite]:  Database at [%1] does not exist.").arg(this->mInput->value("backend-db"));
+			strError = QString("Backend SQLite Database at [%1] does not exist.").arg(this->mInput->value("backend-db"));
 			// We're done, the database doesn't exist
 			return false;
 		}
 		// Check for readability
 		if (!fleDb.isReadable()) {
 			// Set the error message
-			strError = QString("[Backend][SQLite]:  Database at [%1] is not readable.").arg(this->mInput->value("backend-db"));
+			strError = QString("Backend SQLite Database at [%1] is not readable.").arg(this->mInput->value("backend-db"));
 			// We're done, the database is not readable
 			return false;
 		}
@@ -196,10 +196,15 @@ namespace SqlPi
 
 	bool Bootstrap::setupSocketTCP(QString &strError)
 	{
-		// Reset the error
-		strError = QString::null;
 		// Set the listener into the instance
-		this->mListener = new Transport::Tcp(this);
+		this->mListener = new Transport::Tcp();
+		// Try to start the socket
+		if (!this->mListener->await(strError)) {
+			// Set the error
+			strError = QString("TCP Socket [%1]").arg(strError);
+			// We're done, there was an error starting the socket
+			return false;
+		}
 		// We're done, the socket is good to go
 		return true;
 	}
@@ -225,14 +230,14 @@ namespace SqlPi
 		// Make sure we have a backend type
 		if (!this->mInput->isSet("backend-type")) {
 			// Set the error message
-			strError = "[Backend]:  No backend type was defined, the backend type should be mysql, pgsql or sqlite.";
+			strError = "No backend type was defined, the backend type should be mysql, pgsql or sqlite.";
 			// We're done, there is no backend
 			return false;
 		}
 		// Validate the engine
 		if (!qslInterfaceDrivers.contains(this->mInput->value("backend-type").trimmed(), Qt::CaseInsensitive)) {
 			// Set the error message
-			strError = QString("[Backend][Driver]:  Invalid backend provided [%1].  Valid backends are mysql, pgsql and sqlite.").arg(this->mInput->value("backend-type"));
+			strError = QString("Invalid backend driver provided [%1].  Valid backends are mysql, pgsql and sqlite.").arg(this->mInput->value("backend-type"));
 			// We're done, invalid backend type
 			return false;
 		}
@@ -280,12 +285,12 @@ namespace SqlPi
 		// Try to open the backend connection
 		if (!qsdBackend.isOpen() && !qsdBackend.open()) {
 			// Set the error
-			strError = QString("[Backend][InitialConnection]:  %1").arg(qsdBackend.lastError().text());
+			strError = QString("Backend Connection failed [%1]").arg(qsdBackend.lastError().text());
 			// We're done, something went wrong with the connection
 			return false;
 		}
 		// Send the message
-		std::cerr << "[SqlPi][Bootstrap][Backend][InitialConnection]:  Established" << std::endl;
+		Process::Log::notice("Backend Connection Established");
 		// We're done, the backend is good to go
 		return true;
 	}
@@ -297,14 +302,14 @@ namespace SqlPi
 		// Make sure we have a socket type
 		if (!this->mInput->isSet("socket-type")) {
 			// Set the error
-			strError = "[Service]:  No socket type defined.  Valid types are tcp, web and fcgi.";
+			strError = "No socket type defined.  Valid types are tcp, web and fcgi.";
 			// We're done, no socket type defined
 			return false;
 		}
 		// Make sure the socket type is valid
 		if (!qslSocketTypes.contains(this->mInput->value("socket-type").trimmed(), Qt::CaseInsensitive)) {
 			// Set the error
-			strError = QString("[Service]:  Socket type [%1] is not valid.  Valid types are tcp, web and fcgi.").arg(this->mInput->value("socket-type").trimmed());
+			strError = QString("Socket type [%1] is not valid.  Valid types are tcp, web and fcgi.").arg(this->mInput->value("socket-type").trimmed());
 			// We're done, invalid socket type
 			return false;
 		} else {
@@ -314,14 +319,14 @@ namespace SqlPi
 		// Make sure we have a bind address
 		if (!this->mInput->isSet("bind-address")) {
 			// Set the error
-			strError = "[Service]:  No bind address was defined.";
+			strError = "No bind address was defined.";
 			// We're done, no bind address set
 			return false;
 		}
 		// Make sure we have a bind port
 		if (!this->mInput->isSet("bind-port")) {
 			// Set the error
-			strError = "[Service]:  No bind port was defined.";
+			strError = "No bind port was defined.";
 			// We're done, no bind port set
 			return false;
 		}
@@ -345,7 +350,7 @@ namespace SqlPi
 			return this->setupSocketFastCGI(strError);
 		}
 		// Set the error
-		strError = "[Service]:  No provider available.";
+		strError = "No provider available.";
 		// We're done, no provider available
 		return false;
 	}
@@ -363,22 +368,22 @@ namespace SqlPi
 		// Setup the backend database
 		if (!this->setupBackend(strError)) {
 			// Output the error
-			std::cerr << "[SqlPi][Bootstrap]" << strError.toStdString() << std::endl;
+			Process::Log::fatal(strError);
 			// We're done, something went wrong
 			return false;
 		} else {
 			// Send the message
-			std::cerr << "[SqlPi][Bootstrap][Backend]:  Initialized" << std::endl;
+			Process::Log::notice("Backend Initialized");
 		}
 		// Setup the service
 		if (!this->setupService(strError)) {
 			// Output the error
-			std::cerr << "[SqlPi][Bootstrap]" << strError.toStdString() << std::endl;
+			Process::Log::fatal(strError);
 			// We're done, something went wrong
 			return false;
 		} else {
 			// Send the message
-			std::cerr << "[SqlPi][Bootstrap][Service]:  Initialized" << std::endl;
+			Process::Log::notice("Service Started");
 		}
 		// We're done, the service is good to go
 		return true;
@@ -400,7 +405,7 @@ namespace SqlPi
 		return this->mInput;
 	}
 
-	Transport::Abstract::Server* Bootstrap::getListerner()
+	Transport::Abstract::Server* Bootstrap::getListener()
 	{
 		// Return the listener from the instance
 		return this->mListener;

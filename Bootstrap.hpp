@@ -18,7 +18,7 @@
 #include <QRegularExpressionMatch>
 #include <QSqlDatabase>
 #include <QSqlError>
-#include <iostream>
+#include "Process/Log.hpp"
 #include "Process/Configuration.hpp"
 #include "Process/Interface.hpp"
 #include "Transport/Tcp.hpp"

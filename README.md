@@ -52,7 +52,7 @@ $ sudo mv sqlpi /usr/bin
 ## Systemd Unit
 ```
 [Unit]
-Description=SqlPi Database Abstraction Layer
+Description=SqlPi Remote Database Interface
 After=network.target
 
 [Service]

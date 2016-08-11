@@ -22,8 +22,10 @@ SOURCES += \
     Bootstrap.cpp \
     Process/Configuration.cpp \
     Process/Interface.cpp \
+    Transport/Tcp.cpp \
+	Transport/Abstract/Server.cpp \
     Transport/Abstract/Server.cpp \
-    Transport/Tcp.cpp
+    Process/Log.cpp
 
 HEADERS += \
 	Externals/QJsonWebToken/src/qjsonwebtoken.h \
@@ -36,8 +38,9 @@ HEADERS += \
     Bootstrap.hpp \
     Process/Configuration.hpp \
     Process/Interface.hpp \
-    Transport/Abstract/Server.hpp \
-    Transport/Tcp.hpp
+    Transport/Tcp.hpp \
+	Transport/Abstract/Server.hpp \
+    Process/Log.hpp
 
 DISTFILES += \
 	Connection.sql \
