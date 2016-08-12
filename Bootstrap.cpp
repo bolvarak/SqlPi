@@ -26,11 +26,6 @@ namespace SqlPi
 		this->mApplication.setOrganizationName("CDN Depot");
 		// Instantiate the interface
 		this->mInput = new Process::Interface();
-		// Check for arguments
-		if (intArguments == 1) {
-			// Send the help message
-			std::cerr << this->mInput->helpText().toStdString() << std::endl;
-		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QThreadPool>
 #include <QTcpSocket>
+#include "../Process/Log.hpp"
 #include "../Process/Task.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////

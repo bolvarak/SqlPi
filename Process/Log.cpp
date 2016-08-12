@@ -23,23 +23,58 @@ namespace SqlPi
 		QString Log::mDestination = "stdout";
 
 		/////////////////////////////////////////////////////////////////////////////////
+		/// Protected Static Methods ///////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////
+
+		void Log::writeToFile(QString strMessage)
+		{
+			// Create the log message
+			QString strOutput = QString("[SqlPi][%1]%2\n").arg(QDateTime::currentDateTime().toString(Qt::RFC2822Date), strMessage);
+			// Check for a destination
+			if (mDestination.isNull() || mDestination.isEmpty()) {
+				// Reset the destination
+				mDestination = "stdout";
+				// Return the standard write
+				return writeToStd(strMessage);
+			}
+			// Create the file handle
+			QFile fleOutput(mDestination);
+			// Open the file
+			if (!fleOutput.open(QFile::Append)) {
+				// Reset the destination
+				mDestination = "stdout";
+				// Log the error
+				return error("Unable to open log file.  Falling back to std.");
+			}
+			// Write the log entry
+			fleOutput.write(strOutput.toLatin1());
+			// Close the file
+			fleOutput.close();
+		}
+
+		void Log::writeToStd(QString strMessage)
+		{
+			// Create the log message
+			QString strOutput = QString("[SqlPi][%1]%2").arg(QDateTime::currentDateTime().toString(Qt::RFC2822Date), strMessage);
+			// Write the entry
+			std::cerr << strOutput.toStdString() << std::endl;
+		}
+
+		/////////////////////////////////////////////////////////////////////////////////
 		/// Public Static Methods //////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////
 
 		void Log::addEntry(QString strLevel, QString strMessage)
 		{
 			// Create the message template
-			QString strOutputMessage = QString("[SqlPi][%1][%2]\t%3").arg(strLevel, QDateTime(QDate::currentDate()).toString(Qt::RFC2822Date), strMessage.trimmed());
+			QString strOutputMessage = QString("[%2]\t%3").arg(strLevel, strMessage.trimmed());
 			// Check for stdout as the output
-			if ((mDestination.toLower() != "stdout") && mOutput.isOpen() && mOutput.isWritable()) {
-				// Log the message
-				if (mOutput.write(strOutputMessage.toLatin1()) <= 0) {
-					// Set the error
-					std::cerr << "[SqlPi][Process][Log]:  " << mOutput.errorString().toStdString() << std::endl;
-				}
+			if (mDestination.toLower() != "stdout") {
+				// Write the log entry
+				return writeToFile(strOutputMessage);
 			} else {
-				// Log the message
-				std::cerr << strOutputMessage.toStdString() << std::endl;
+				// Write the log entry
+				return writeToStd(strOutputMessage);
 			}
 		}
 
@@ -64,13 +99,13 @@ namespace SqlPi
 		void Log::notice(QString strMessage)
 		{
 			// Log the entry
-			addEntry("Notice", strMessage);
+			return addEntry("Notice", strMessage);
 		}
 
 		void Log::warning(QString strMessage)
 		{
 			// Log the entry
-			addEntry("Warning", strMessage);
+			return addEntry("Warning", strMessage);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////
@@ -83,12 +118,6 @@ namespace SqlPi
 			return mDestination;
 		}
 
-		QFile &Log::getOutput()
-		{
-			// Return the output from the instance
-			return mOutput;
-		}
-
 		/////////////////////////////////////////////////////////////////////////////////
 		/// Static Setters /////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////
@@ -97,43 +126,12 @@ namespace SqlPi
 		{
 			// Check the destination
 			if (strDestination.trimmed().toLower() != "stdout") {
-				// Create the file info object
-				QFileInfo qfiDestination(strDestination.trimmed());
-				// Make sure the file exists
-				if (!qfiDestination.exists()) {
-					// Set the error message
-					std::cerr <<  QString("File [%1] does not exist.").arg(strDestination).toStdString() << std::endl;
-					// We're done, the log file doesn't exist
-					return;
-				}
-				// Make sure the file is writable
-				if (!qfiDestination.isWritable()) {
-					// Set the error message
-					std::cerr << QString("File [%1] is not writable.").arg(strDestination).toStdString() << std::endl;
-					// We're done, cannot write to log file
-					return;
-				}
 				// Set the destination into the instance
-				mDestination = strDestination;
-				// Create the file device
-				setOutput(QFile(qfiDestination.fileName()));
+				mDestination = strDestination.trimmed();
 			} else {
 				// Set the destination
 				mDestination = "stdout";
 			}
-		}
-
-		void Log::setOutput(QFile fleOutput)
-		{
-			// Make sure the file is open or can be opened
-			if (!fleOutput.isOpen() && !fleOutput.open(QIODevice::WriteOnly|QIODevice::Append)) {
-				// Set the error message
-				std::cerr << QString("File [%s] could not be opened for writing.").arg(fleOutput.fileName()).toStdString() << std::endl;
-				// We're done
-				return;
-			}
-			// Set the output device into the instance
-			mOutput(fleOutput);
 		}
 
 	/////////////////////////////////////////////////////////////////////////////////////

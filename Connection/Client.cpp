@@ -41,7 +41,7 @@ namespace SqlPi
 			// Connect the ready state slot
 			this->connect(this->mSocket, SIGNAL(readyRead()), this, SLOT(ready()));
 			// Log the status
-			qDebug() << "qtDB-API:  Client Connected";
+			Process::Log::notice("Incoming Client Connection");
 		}
 
 		///////////////////////////////////////////////////////////////////////
@@ -51,13 +51,13 @@ namespace SqlPi
 		void Client::connected()
 		{
 			// Log the status
-			qDebug() << "qtDB-API:  Client Connection Established";
+			Process::Log::notice("Client Connection Established");
 		}
 
 		void Client::disconnected()
 		{
 			// Log the status
-			qDebug() << "qtDB-API:  Client Disconnected";
+			Process::Log::notice("Client Connection Terminated");
 		}
 
 		void Client::error(QString strMessage, int intCode)
@@ -98,7 +98,7 @@ namespace SqlPi
 			// Grab the command
 			QByteArray qbaCommand = this->mSocket->readLine();
 			// Send the command to debug
-			qDebug() << "qtDB-API:  Command:  " << qbaCommand;
+			Process::Log::debug(QString("Command Received:  %1").arg(QString::fromLatin1(qbaCommand.trimmed())));
 			// Instantiate the new task
 			SqlPi::Process::Task* procTask = new SqlPi::Process::Task(qbaCommand);
 			// We would like to auto delete the task once it's finished

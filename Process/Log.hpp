@@ -51,12 +51,25 @@ namespace SqlPi
 				 */
 				static QString mDestination;
 
+				/////////////////////////////////////////////////////////////////////////
+				/// Static Methods /////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////
+
 				/**
-				 * @paragraph This property contains the log file to write to
-				 * @brief SqlPi::Process::Log::mOutput
-				 * @var QFile
+				 * @paragraph This method writes a log entry to a log file
+				 * @brief SqlPi::Process::Log::writeToFile()
+				 * @param QString strMessage
+				 * @return void
 				 */
-				static QFile mOutput;
+				static void writeToFile(QString strMessage);
+
+				/**
+				 * @paragraph This method writes a log entry to standard out
+				 * @brief SqlPi::Process::Log::writeToStd()
+				 * @param QString strMessage
+				 * @return void
+				 */
+				static void writeToStd(QString strMessage);
 
 			/////////////////////////////////////////////////////////////////////////////
 			/// Public Methods & Properties ////////////////////////////////////////////
@@ -127,13 +140,6 @@ namespace SqlPi
 				 */
 				static QString getDestination();
 
-				/**
-				 * @paragraph This method returns the output file from the instance
-				 * @brief SqlPi::Process::Log::getOutput()
-				 * @return QFile&
-				 */
-				static QFile &getOutput();
-
 				/////////////////////////////////////////////////////////////////////////
 				/// Setters ////////////////////////////////////////////////////////////
 				///////////////////////////////////////////////////////////////////////
@@ -145,14 +151,6 @@ namespace SqlPi
 				 * @return void
 				 */
 				static void setDestination(QString strDestination);
-
-				/**
-				 * @paragraph This method sets the output device for the log
-				 * @brief SqlPi::Process::Log::setOutput()
-				 * @param QFile &fleOutput
-				 * @return void
-				 */
-				static void setOutput(QFile fleOutput);
 
 		/////////////////////////////////////////////////////////////////////////////////
 		}; /// End SqlPi::Process::Log Class Definition ////////////////////////////////
