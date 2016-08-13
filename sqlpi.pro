@@ -19,13 +19,13 @@ SOURCES += \
 	Api/Abstract/SQLite.cpp \
 	Api/Abstract/Model.cpp \
 	Api/Model/Authorization.cpp \
-    Bootstrap.cpp \
-    Process/Configuration.cpp \
-    Process/Interface.cpp \
-    Transport/Tcp.cpp \
+	Bootstrap.cpp \
+	Process/Configuration.cpp \
+	Process/Interface.cpp \
+	Transport/Tcp.cpp \
 	Transport/Abstract/Server.cpp \
-    Transport/Abstract/Server.cpp \
-    Process/Log.cpp
+	Transport/Abstract/Server.cpp \
+	Process/Log.cpp
 
 HEADERS += \
 	Externals/QJsonWebToken/src/qjsonwebtoken.h \
@@ -35,15 +35,15 @@ HEADERS += \
 	Api/Abstract/SQLite.hpp \
 	Api/Abstract/Model.hpp \
 	Api/Model/Authorization.hpp \
-    Bootstrap.hpp \
-    Process/Configuration.hpp \
-    Process/Interface.hpp \
-    Transport/Tcp.hpp \
+	Bootstrap.hpp \
+	Process/Configuration.hpp \
+	Process/Interface.hpp \
+	Transport/Tcp.hpp \
 	Transport/Abstract/Server.hpp \
-    Process/Log.hpp
+	Process/Log.hpp
 
 DISTFILES += \
-	Connection.sql \
-	Authorization.sql \
-	Session.sql \
-    README.md
+	Sql/SQLite/Connection.sql \
+	Sql/SQLite/Authorization.sql \
+	Sql/SQLite/Session.sql \
+	README.md
