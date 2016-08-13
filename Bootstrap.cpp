@@ -26,6 +26,8 @@ namespace SqlPi
 		this->mApplication.setOrganizationName("CDN Depot");
 		// Instantiate the interface
 		this->mInput = new Process::Interface();
+		// Make the application connection
+		this->connect(&this->mApplication, SIGNAL(aboutToQuit()), this, SLOT(closing()));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -160,13 +162,6 @@ namespace SqlPi
 			// We're done, the database doesn't exist
 			return false;
 		}
-		// Check for readability
-		if (!fleDb.isReadable()) {
-			// Set the error message
-			strError = QString("Backend SQLite Database at [%1] is not readable.").arg(this->mInput->value("backend-db"));
-			// We're done, the database is not readable
-			return false;
-		}
 		// Set th backend database engine into the configuration
 		Process::Configuration::setBackendType("QSQLITE");
 		// Set the backend database name into the configuration
@@ -285,7 +280,7 @@ namespace SqlPi
 			return false;
 		}
 		// Send the message
-		Process::Log::notice("Backend Connection Established");
+		Process::Log::notice(QString("Backend Connection Established (%1)").arg(Process::Configuration::getBackendType(true)));
 		// We're done, the backend is good to go
 		return true;
 	}
@@ -360,6 +355,9 @@ namespace SqlPi
 		QString strError;
 		// Process the CLI
 		this->mInput->process(this->mApplication);
+		// Set the log file
+		Process::Configuration::setLogFile(this->mInput->value("log-file"));
+		Process::Log::setDestination(Process::Configuration::getLogFile());
 		// Setup the backend database
 		if (!this->setupBackend(strError)) {
 			// Output the error
@@ -404,6 +402,16 @@ namespace SqlPi
 	{
 		// Return the listener from the instance
 		return this->mListener;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	/// Public Slots ///////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////
+
+	void Bootstrap::closing()
+	{
+		// Send the message
+		Process::Log::notice("Service Shutting Down");
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////

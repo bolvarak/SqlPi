@@ -66,10 +66,30 @@ namespace SqlPi
 			return mBackendPrefix;
 		}
 
-		QString Configuration::getBackendType()
+		QString Configuration::getBackendType(bool blnAsEngine)
 		{
-			// Return the backend database engine from the instance
-			return mBackendType;
+			// Check the engine flag
+			if (!blnAsEngine) {
+				// Return the backend database engine from the instance
+				return mBackendType;
+			}
+			// Check for MySQL
+			if (mBackendType.toLower() == "qmysql") {
+				// We're done, return the engine name
+				return "MySQL";
+			}
+			// Check for PostgreSQL
+			if (mBackendType.toLower() == "qpsql") {
+				// We're done, return the engine name
+				return "PgSQL";
+			}
+			// Check for SQLite
+			if (mBackendType.toLower() == "qsqlite") {
+				// We're done, return the engine name
+				return "SQLite";
+			}
+			// We're done, there is an unknow engine in play
+			return "Unknown";
 		}
 
 		QString Configuration::getBackendUsername()

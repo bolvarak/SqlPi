@@ -171,9 +171,10 @@ namespace SqlPi
 				/**
 				 * @paragraph This method returns the backend database engine from the instance
 				 * @brief SqlPi::Process::Configuration::getBackendType()
+				 * @param bool blnAsEngine [false]
 				 * @return QString
 				 */
-				static QString getBackendType();
+				static QString getBackendType(bool blnAsEngine = false);
 
 				/**
 				 * @paragraph This method returns the backend database username from the instance
